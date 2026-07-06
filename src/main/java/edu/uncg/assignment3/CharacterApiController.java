@@ -69,8 +69,8 @@ public class CharacterApiController {
     }
 
     @GetMapping("/origin")
-    public ResponseEntity<List<Character>> getCharactersOfOrigin(@RequestParam String origin) {
-        List<Character> characters = this.characterService.getCharactersOfOrigin(origin);
+    public ResponseEntity<List<Character>> getCharactersOfOrigin(@RequestParam String query) {
+        List<Character> characters = this.characterService.getCharactersOfOrigin(query);
         if (characters.isEmpty()) {
             return ResponseEntity.ok(Collections.emptyList());
         }
