@@ -24,44 +24,45 @@ public class CharacterApiController {
         this.characterService = characterService;
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping({ "", "/" })
     public ResponseEntity<List<Character>> getAllCharacters() {
         List<Character> characters = this.characterService.getAllCharacters();
         return ResponseEntity.ok(characters);
     }
 
-    @GetMapping({"/{characterId}", "/{characterId}/"})
+    @GetMapping({ "/{characterId}", "/{characterId}/" })
     public ResponseEntity<Character> getCharacterById(@PathVariable long characterId) {
         Character character = this.characterService.getCharacterById(characterId);
         return ResponseEntity.ok(character);
     }
 
-    @PostMapping({"", "/"})
+    @PostMapping({ "", "/" })
     public ResponseEntity<Character> createCharacter(@RequestBody CharacterCreateDto dto) {
         Character character = this.characterService.createCharacter(dto);
         URI location = URI.create("/characters/" + character.getId() + "/");
         return ResponseEntity.created(location).body(character);
     }
 
-    @PutMapping({"/{characterId}", "/{characterId}/"})
-    public ResponseEntity<Character> updateCharacter(@PathVariable long characterId, @RequestBody CharacterUpdateDto dto) {
+    @PutMapping({ "/{characterId}", "/{characterId}/" })
+    public ResponseEntity<Character> updateCharacter(@PathVariable long characterId,
+            @RequestBody CharacterUpdateDto dto) {
         Character character = this.characterService.updateCharacter(characterId, dto);
         return ResponseEntity.ok(character);
     }
 
-    @DeleteMapping({"/{characterId}", "/{characterId}/"})
+    @DeleteMapping({ "/{characterId}", "/{characterId}/" })
     public ResponseEntity<Void> deleteCharacter(@PathVariable long characterId) {
         this.characterService.deleteCharacter(characterId);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping({"/origin", "/origin/"})
+    @GetMapping({ "/origin", "/origin/" })
     public ResponseEntity<List<Character>> getCharactersOfOrigin(@RequestParam String query) {
         List<Character> characters = this.characterService.getCharactersOfOrigin(query);
         return ResponseEntity.ok(characters);
     }
 
-    @GetMapping({"/search", "/search/"})
+    @GetMapping({ "/search", "/search/" })
     public ResponseEntity<List<Character>> searchCharacters(@RequestParam String query) {
         List<Character> characters = this.characterService.searchCharacters(query);
         return ResponseEntity.ok(characters);

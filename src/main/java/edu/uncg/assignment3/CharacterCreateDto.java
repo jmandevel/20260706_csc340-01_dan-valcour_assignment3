@@ -15,5 +15,5 @@ public class CharacterCreateDto {
     private boolean isAvatar;
     private boolean isSpider;
     private boolean isPassive;
-    private boolean isAggressive; 
+    private boolean isAggressive;
 }
