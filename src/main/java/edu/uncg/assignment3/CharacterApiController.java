@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,22 +36,16 @@ public class CharacterApiController {
     }
 
     @PostMapping({ "", "/" })
-    public ResponseEntity<Character> createCharacter(@RequestParam String name, @RequestParam String description,
-            @RequestParam String ingameDescription, @RequestParam String origin, @RequestParam boolean isAvatar,
-            @RequestParam boolean isSpider, @RequestParam boolean isPassive, @RequestParam boolean isAggressive) {
-        Character character = this.characterService.createCharacter(name, description, ingameDescription, origin,
-                isAvatar, isSpider, isPassive, isAggressive);
+    public ResponseEntity<Character> createCharacter(@RequestBody CharacterCreateDto dto) {
+        Character character = this.characterService.createCharacter(dto);
         URI location = URI.create("/characters/" + character.getId() + "/");
         return ResponseEntity.created(location).body(character);
     }
 
     @PutMapping({ "/{characterId}", "/{characterId}/" })
     public ResponseEntity<Character> updateCharacter(@PathVariable long characterId,
-            @RequestParam String name, @RequestParam String description,
-            @RequestParam String ingameDescription, @RequestParam String origin, @RequestParam boolean isAvatar,
-            @RequestParam boolean isSpider, @RequestParam boolean isPassive, @RequestParam boolean isAggressive) {
-        Character character = this.characterService.updateCharacter(characterId, name, description, ingameDescription,
-                origin, isAvatar, isSpider, isPassive, isAggressive);
+            @RequestBody CharacterUpdateDto dto) {
+        Character character = this.characterService.updateCharacter(characterId, dto);
         return ResponseEntity.ok(character);
     }
 
