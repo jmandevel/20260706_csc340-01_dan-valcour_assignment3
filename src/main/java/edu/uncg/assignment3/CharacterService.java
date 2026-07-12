@@ -7,13 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class CharacterService {
     private final CharacterRepository characterRepository;
-
-    public CharacterService(CharacterRepository characterRepository) {
-        this.characterRepository = characterRepository;
-    }
 
     public List<Character> getAllCharacters() {
         return this.characterRepository.findAllByOrderByIdAsc();
