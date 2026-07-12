@@ -101,7 +101,7 @@
   <footer>
     <div>
       <p>Site created by Daniel Valcour (<a href="https://github.com/jmandevel">jmandevel</a>) (<a
-          href="https://github.com/jmandevel/creature-site">Source Code</a>)</p>
+          href="https://github.com/jmandevel/20260706_csc340-01_dan-valcour_assignment3">Source Code</a>)</p>
     </div>
   </footer>
 </body>

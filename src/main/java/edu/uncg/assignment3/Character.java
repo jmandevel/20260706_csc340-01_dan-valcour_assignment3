@@ -1,5 +1,6 @@
 package edu.uncg.assignment3;
 
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "creatures")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Character {
 
     @Id
@@ -38,6 +37,12 @@ public class Character {
     private String origin;
 
     @Column(nullable = false)
+    private String thumbnailPath;
+
+    @Column(nullable = false)
+    private String mainImagePath;
+
+    @Column(nullable = false)
     private boolean isAvatar;
 
     @Column(nullable = false)
@@ -49,16 +54,17 @@ public class Character {
     @Column(nullable = false)
     private boolean isAggressive;
 
-    @UpdateTimestamp
     @Column(nullable = false)
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Character(String name, String description, String ingameDescription,
-            String origin, boolean isAvatar, boolean isSpider, boolean isPassive, boolean isAggressive) {
+    public Character(String name, String description, String ingameDescription, String origin, Path thumbnailPath, Path mainImagePath, boolean isAvatar, boolean isSpider, boolean isPassive, boolean isAggressive) {
         this.name = name;
         this.description = description;
         this.ingameDescription = ingameDescription;
         this.origin = origin;
+        this.thumbnailPath = thumbnailPath.toString();
+        this.mainImagePath = mainImagePath.toString();
         this.isAvatar = isAvatar;
         this.isSpider = isSpider;
         this.isPassive = isPassive;

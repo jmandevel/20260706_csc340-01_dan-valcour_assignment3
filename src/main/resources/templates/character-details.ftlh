@@ -14,13 +14,13 @@
       <h1>Wurm Online Creatures</h1>
       <nav>
         <div>
-          <a href="index.html">Home</a>
+          <a href="/characters">Home</a>
         </div>
         <div>
-          <a href="about.html">About</a>
+          <a href="/characters/about">About</a>
         </div>
         <div>
-          <a href="new-character-form.html">Add a Creature</a>
+          <a href="/characters/new">Add a Creature</a>
         </div>
       </nav>
     </div>
@@ -29,7 +29,7 @@
   <main class="about">
     <article class="creature-description">
       <h2>${character.name}</h2>
-      <img src="/content/Brownbear.jpg" alt="Brown Bear">
+      <img src="/${(character.mainImagePath)!}" alt="${character.name}">
       <blockquote class="ingame-quote"><em>${character.ingameDescription}</em> - ingame description
       </blockquote>
       <h3>General Info</h3>
@@ -42,7 +42,7 @@
   <footer>
     <div>
       <p>Site created by Daniel Valcour (<a href="https://github.com/jmandevel">jmandevel</a>) (<a
-          href=https://github.com/jmandevel/creature-site>Source Code</a>)</p>
+          href=https://github.com/jmandevel/20260706_csc340-01_dan-valcour_assignment3>Source Code</a>)</p>
     </div>
   </footer>
 </body>

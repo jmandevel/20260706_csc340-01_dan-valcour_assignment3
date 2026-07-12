@@ -1,6 +1,7 @@
 package edu.uncg.assignment3;
 
 import java.net.URI;
+import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -9,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.AllArgsConstructor;
@@ -36,16 +37,16 @@ public class CharacterApiController {
     }
 
     @PostMapping({ "", "/" })
-    public ResponseEntity<Character> createCharacter(@RequestBody CharacterCreateDto dto) {
-        Character character = this.characterService.createCharacter(dto);
+    public ResponseEntity<Character> createCharacter(@RequestPart CharacterCreateDto dto, @RequestPart Path thumbnailPath, @RequestPart Path mainImagePath) {
+        Character character = this.characterService.createCharacter(dto, thumbnailPath, mainImagePath);
         URI location = URI.create("/characters/" + character.getId() + "/");
         return ResponseEntity.created(location).body(character);
     }
 
     @PutMapping({ "/{characterId}", "/{characterId}/" })
     public ResponseEntity<Character> updateCharacter(@PathVariable long characterId,
-            @RequestBody CharacterUpdateDto dto) {
-        Character character = this.characterService.updateCharacter(characterId, dto);
+            @RequestPart CharacterUpdateDto dto, @RequestPart Path thumbnail, @RequestPart Path mainImage) {
+        Character character = this.characterService.updateCharacter(characterId, dto, thumbnail, mainImage);
         return ResponseEntity.ok(character);
     }
 
