@@ -1,6 +1,6 @@
 package edu.uncg.assignment3;
 
-import java.util.Collections;
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -24,63 +24,46 @@ public class CharacterApiController {
         this.characterService = characterService;
     }
 
-    @GetMapping
+    @GetMapping({"", "/"})
     public ResponseEntity<List<Character>> getAllCharacters() {
         List<Character> characters = this.characterService.getAllCharacters();
-        if (characters.isEmpty()) {
-            return ResponseEntity.ok(Collections.emptyList());
-        }
         return ResponseEntity.ok(characters);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Character> getCharacterById(@PathVariable long id) {
-        Character character = this.characterService.getCharacterById(id);
-        if (character != null) {
-            return ResponseEntity.ok(character);
-        }
-        return ResponseEntity.notFound().build();
+    @GetMapping({"/{characterId}", "/{characterId}/"})
+    public ResponseEntity<Character> getCharacterById(@PathVariable long characterId) {
+        Character character = this.characterService.getCharacterById(characterId);
+        return ResponseEntity.ok(character);
     }
 
-    @PostMapping
-    public ResponseEntity<Character> createCharacter(@RequestBody Character character) {
-        Character createdCharacter = this.characterService.createCharacter(character);
-        return ResponseEntity.ok(createdCharacter);
+    @PostMapping({"", "/"})
+    public ResponseEntity<Character> createCharacter(@RequestBody CharacterCreateDto dto) {
+        Character character = this.characterService.createCharacter(dto);
+        URI location = URI.create("/characters/" + character.getId() + "/");
+        return ResponseEntity.created(location).body(character);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Character> updateCharacter(@PathVariable long id, @RequestBody Character updatedCharacter) {
-        Character character = this.characterService.updateCharacter(id, updatedCharacter);
-        if (character != null) {
-            return ResponseEntity.ok(character);
-        }
-        return ResponseEntity.notFound().build();
+    @PutMapping({"/{characterId}", "/{characterId}/"})
+    public ResponseEntity<Character> updateCharacter(@PathVariable long characterId, @RequestBody CharacterUpdateDto dto) {
+        Character character = this.characterService.updateCharacter(characterId, dto);
+        return ResponseEntity.ok(character);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCharacter(@PathVariable long id) {
-        boolean deleted = this.characterService.deleteCharacter(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    @DeleteMapping({"/{characterId}", "/{characterId}/"})
+    public ResponseEntity<Void> deleteCharacter(@PathVariable long characterId) {
+        this.characterService.deleteCharacter(characterId);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/origin")
+    @GetMapping({"/origin", "/origin/"})
     public ResponseEntity<List<Character>> getCharactersOfOrigin(@RequestParam String query) {
         List<Character> characters = this.characterService.getCharactersOfOrigin(query);
-        if (characters.isEmpty()) {
-            return ResponseEntity.ok(Collections.emptyList());
-        }
         return ResponseEntity.ok(characters);
     }
 
-    @GetMapping("/search")
+    @GetMapping({"/search", "/search/"})
     public ResponseEntity<List<Character>> searchCharacters(@RequestParam String query) {
         List<Character> characters = this.characterService.searchCharacters(query);
-        if (characters.isEmpty()) {
-            return ResponseEntity.ok(Collections.emptyList());
-        }
         return ResponseEntity.ok(characters);
     }
 }

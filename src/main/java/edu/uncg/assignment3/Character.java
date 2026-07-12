@@ -2,15 +2,14 @@ package edu.uncg.assignment3;
 
 import java.time.LocalDateTime;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +24,7 @@ public class Character {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long characterId;
+    private long id;
 
     @Column(nullable = false)
     private String name;
@@ -51,8 +50,13 @@ public class Character {
     @Column(nullable = false)
     private boolean isAggressive;
 
-    @JsonFormat(pattern = "yyy-MM-dd HH:mm")
+    @CreationTimestamp
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 
     public Character(String name, String description, String ingameDescription,
             String origin, boolean isAvatar, boolean isSpider, boolean isPassive, boolean isAggressive) {
@@ -64,11 +68,5 @@ public class Character {
         this.isSpider = isSpider;
         this.isPassive = isPassive;
         this.isAggressive = isAggressive;
-    }
-
-    @PrePersist
-    @PreUpdate
-    protected void onUpdate() {
-        this.createdAt = LocalDateTime.now();
     }
 }

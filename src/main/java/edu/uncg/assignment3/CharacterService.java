@@ -1,8 +1,11 @@
 package edu.uncg.assignment3;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class CharacterService {
@@ -16,36 +19,45 @@ public class CharacterService {
         return this.characterRepository.findAll();
     }
 
-    public Character getCharacterById(long id) {
-        return this.characterRepository.findById(id).orElse(null);
+    public Character getCharacterById(long characterId) {
+        Optional<Character> characterO = this.characterRepository.findById(characterId);
+        if (characterO.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no character with id " + characterId + ".");
+        }
+        Character character = characterO.get();
+        return character;
     }
 
-    public Character createCharacter(Character character) {
+    public Character createCharacter(CharacterCreateDto dto) {
+        Character character = new Character(dto.getName(), dto.getDescription(), dto.getIngameDescription(),
+                dto.getOrigin(), dto.isAvatar(), dto.isSpider(), dto.isPassive(), dto.isAggressive());
         return this.characterRepository.save(character);
     }
 
-    public Character updateCharacter(long id, Character updatedCharacter) {
-        Character existingCharacter = this.characterRepository.findById(id).orElse(null);
-        if (existingCharacter != null) {
-            existingCharacter.setName(updatedCharacter.getName());
-            existingCharacter.setDescription(updatedCharacter.getDescription());
-            existingCharacter.setIngameDescription(updatedCharacter.getIngameDescription());
-            existingCharacter.setOrigin(updatedCharacter.getOrigin());
-            existingCharacter.setAvatar(updatedCharacter.isAvatar());
-            existingCharacter.setSpider(updatedCharacter.isSpider());
-            existingCharacter.setPassive(updatedCharacter.isPassive());
-            existingCharacter.setAggressive(updatedCharacter.isAggressive());
-            return this.characterRepository.save(existingCharacter);
+    public Character updateCharacter(long characterId, CharacterUpdateDto dto) {
+        Optional<Character> characterO = this.characterRepository.findById(characterId);
+        if (characterO.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no character with id " + characterId + ".");
         }
-        return null;
+        Character character = characterO.get();
+        character.setName(dto.getName());
+        character.setDescription(dto.getDescription());
+        character.setIngameDescription(dto.getIngameDescription());
+        character.setOrigin(dto.getOrigin());
+        character.setAvatar(dto.isAvatar());
+        character.setSpider(dto.isSpider());
+        character.setPassive(dto.isPassive());
+        character.setAggressive(dto.isAggressive());
+        return this.characterRepository.save(character);
     }
 
-    public boolean deleteCharacter(long id) {
-        if (this.characterRepository.existsById(id)) {
-            this.characterRepository.deleteById(id);
-            return true;
+    public void deleteCharacter(long characterId) {
+        Optional<Character> characterO = this.characterRepository.findById(characterId);
+        if (characterO.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no character with id " + characterId + ".");
         }
-        return false;
+        Character character = characterO.get();
+        this.characterRepository.delete(character);
     }
 
     public List<Character> searchCharacters(String keyword) {
