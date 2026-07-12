@@ -28,26 +28,30 @@ public class CharacterService {
         return character;
     }
 
-    public Character createCharacter(CharacterCreateDto dto) {
-        Character character = new Character(dto.getName(), dto.getDescription(), dto.getIngameDescription(),
-                dto.getOrigin(), dto.isAvatar(), dto.isSpider(), dto.isPassive(), dto.isAggressive());
+    public Character createCharacter(String name, String description,
+            String ingameDescription, String origin, boolean isAvatar,
+            boolean isSpider, boolean isPassive, boolean isAggressive)  {
+        Character character = new Character(name, description, ingameDescription,
+                origin, isAvatar, isSpider, isPassive, isAggressive);
         return this.characterRepository.save(character);
     }
 
-    public Character updateCharacter(long characterId, CharacterUpdateDto dto) {
+    public Character updateCharacter(long characterId, String name, String description,
+            String ingameDescription, String origin, boolean isAvatar,
+            boolean isSpider, boolean isPassive, boolean isAggressive) {
         Optional<Character> characterO = this.characterRepository.findById(characterId);
         if (characterO.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no character with id " + characterId + ".");
         }
         Character character = characterO.get();
-        character.setName(dto.getName());
-        character.setDescription(dto.getDescription());
-        character.setIngameDescription(dto.getIngameDescription());
-        character.setOrigin(dto.getOrigin());
-        character.setAvatar(dto.isAvatar());
-        character.setSpider(dto.isSpider());
-        character.setPassive(dto.isPassive());
-        character.setAggressive(dto.isAggressive());
+        character.setName(name);
+        character.setDescription(description);
+        character.setIngameDescription(ingameDescription);
+        character.setOrigin(origin);
+        character.setAvatar(isAvatar);
+        character.setSpider(isSpider);
+        character.setPassive(isPassive);
+        character.setAggressive(isAggressive);
         return this.characterRepository.save(character);
     }
 
