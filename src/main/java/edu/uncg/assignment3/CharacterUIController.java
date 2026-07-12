@@ -49,8 +49,7 @@ public class CharacterUIController {
     public String showUpdateForm(@PathVariable Long characterId, Model model) {
         Character character = this.characterService.getCharacterById(characterId);
         CharacterUpdateDto dto = new CharacterUpdateDto(character.getName(), character.getDescription(),
-                character.getIngameDescription(), character.getOrigin(), character.isAvatar(), character.isSpider(),
-                character.isPassive(), character.isAggressive());
+                character.getIngameDescription(), character.getOrigin());
         model.addAttribute("dto", dto);
         model.addAttribute("characterId", characterId);
         return "character-update";

@@ -12,8 +12,4 @@ public class CharacterUpdateDto {
     private String description;
     private String ingameDescription;
     private String origin;
-    private boolean isAvatar;
-    private boolean isSpider;
-    private boolean isPassive;
-    private boolean isAggressive;
 }

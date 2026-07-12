@@ -35,8 +35,7 @@ public class CharacterService {
 
     public Character createCharacter(CharacterCreateDto dto, Path thumbnailPath, Path mainImagePath) {
         Character character = new Character(dto.getName(), dto.getDescription(), dto.getIngameDescription(),
-                dto.getOrigin(), thumbnailPath, mainImagePath, dto.isAvatar(), dto.isSpider(), dto.isPassive(),
-                dto.isAggressive());
+                dto.getOrigin(), thumbnailPath, mainImagePath);
         return this.characterRepository.save(character);
     }
 
@@ -50,10 +49,6 @@ public class CharacterService {
         character.setDescription(dto.getDescription());
         character.setIngameDescription(dto.getIngameDescription());
         character.setOrigin(dto.getOrigin());
-        character.setAvatar(dto.isAvatar());
-        character.setSpider(dto.isSpider());
-        character.setPassive(dto.isPassive());
-        character.setAggressive(dto.isAggressive());
         if (thumbnailPath != null) {
             character.setThumbnailPath(thumbnailPath.toString());
         }

@@ -64,26 +64,6 @@
         </div>
       </fieldset>
 
-      <fieldset class="tags">
-        <h3>Tags</h3>
-        <label>
-          Avatar
-          <input type="checkbox" name="avatar" <#if dto?? && dto.avatar>checked</#if>>
-        </label>
-        <label>
-          Spider
-          <input type="checkbox" name="spider" <#if dto?? && dto.spider>checked</#if>>
-        </label>
-        <label>
-          Passive
-          <input type="checkbox" name="passive" <#if dto?? && dto.passive>checked</#if>>
-        </label>
-        <label>
-          Aggressive
-          <input type="checkbox" name="aggressive" <#if dto?? && dto.aggressive>checked</#if>>
-        </label>
-      </fieldset>
-
       <fieldset>
         <label>
           <h3>Images</h3>

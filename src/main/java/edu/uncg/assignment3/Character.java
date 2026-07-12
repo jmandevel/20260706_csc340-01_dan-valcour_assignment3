@@ -43,31 +43,15 @@ public class Character {
     private String mainImagePath;
 
     @Column(nullable = false)
-    private boolean isAvatar;
-
-    @Column(nullable = false)
-    private boolean isSpider;
-
-    @Column(nullable = false)
-    private boolean isPassive;
-
-    @Column(nullable = false)
-    private boolean isAggressive;
-
-    @Column(nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Character(String name, String description, String ingameDescription, String origin, Path thumbnailPath, Path mainImagePath, boolean isAvatar, boolean isSpider, boolean isPassive, boolean isAggressive) {
+    public Character(String name, String description, String ingameDescription, String origin, Path thumbnailPath, Path mainImagePath) {
         this.name = name;
         this.description = description;
         this.ingameDescription = ingameDescription;
         this.origin = origin;
         this.thumbnailPath = thumbnailPath.toString();
         this.mainImagePath = mainImagePath.toString();
-        this.isAvatar = isAvatar;
-        this.isSpider = isSpider;
-        this.isPassive = isPassive;
-        this.isAggressive = isAggressive;
     }
 }

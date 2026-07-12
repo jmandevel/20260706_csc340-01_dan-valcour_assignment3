@@ -31,14 +31,6 @@
             <input type="" text" class="search" placeholder="Search creatures...">
             <button>Search</button>
         </div>
-        <div class="filters">
-            <button class="filter filter-active">Valreian</button>
-            <button class="filter">Wurmian</button>
-            <button class="filter">Avatar</button>
-            <button class="filter">Spider</button>
-            <button class="filter">Passive</button>
-            <button class="filter">Aggressive</button>
-        </div>
     </search>
 
     <main class="card-container">
