@@ -2,7 +2,6 @@ package edu.uncg.assignment3;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
@@ -49,10 +48,6 @@ public class Character {
 
     @Column(nullable = false)
     private boolean isAggressive;
-
-    @CreationTimestamp
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
 
     @UpdateTimestamp
     @Column(nullable = false)
