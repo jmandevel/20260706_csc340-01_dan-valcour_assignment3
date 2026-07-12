@@ -36,6 +36,8 @@
       <p>
         ${character.description}
       </p>
+      <a href="/characters/updateForm/${character.id}"><button>Update</button></a>
+      <a href="/characters/delete/${character.id}"><button>Delete</button></a>
     </article>
   </main>
 

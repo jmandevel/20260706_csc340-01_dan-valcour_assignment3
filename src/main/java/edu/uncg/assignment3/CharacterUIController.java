@@ -45,8 +45,26 @@ public class CharacterUIController {
         return "character-create";
     }
 
+    @GetMapping({ "/updateForm/{characterId}", "/updateForm/{characterId}/" })
+    public String showUpdateForm(@PathVariable Long characterId, Model model) {
+        Character character = this.characterService.getCharacterById(characterId);
+        CharacterUpdateDto dto = new CharacterUpdateDto(character.getName(), character.getDescription(),
+                character.getIngameDescription(), character.getOrigin(), character.isAvatar(), character.isSpider(),
+                character.isPassive(), character.isAggressive());
+        model.addAttribute("dto", dto);
+        model.addAttribute("characterId", characterId);
+        return "character-update";
+    }
+
+    @GetMapping({ "/delete/{characterId}", "/delete/{characterId}" })
+    public String deleteCharacter(@PathVariable Long characterId) {
+        this.characterService.deleteCharacter(characterId);
+        return "redirect:/";
+    }
+
     @PostMapping({ "/save", "/save/" })
-    public String createCharacter(@ModelAttribute CharacterCreateDto dto, @RequestParam(required = false) MultipartFile thumbnail,
+    public String createCharacter(@ModelAttribute CharacterCreateDto dto,
+            @RequestParam(required = false) MultipartFile thumbnail,
             @RequestParam(required = false) MultipartFile mainImage) {
         try {
             Path thumbnailPath = null;
@@ -58,6 +76,27 @@ public class CharacterUIController {
                 mainImagePath = this.characterService.saveFile(mainImage);
             }
             Character character = this.characterService.createCharacter(dto, thumbnailPath, mainImagePath);
+            return "redirect:/characters/" + character.getId();
+        } catch (Exception e) {
+            return "redirect:/characters/new/?error=true";
+        }
+    }
+
+    @PostMapping({ "/change/{characterId}", "/change/{characterId}/" })
+    public String updateCharacter(@PathVariable Long characterId, @ModelAttribute CharacterUpdateDto dto,
+            @RequestParam(required = false) MultipartFile thumbnail,
+            @RequestParam(required = false) MultipartFile mainImage) {
+        try {
+            Path thumbnailPath = null;
+            if (!thumbnail.isEmpty()) {
+                thumbnailPath = this.characterService.saveFile(thumbnail);
+            }
+            Path mainImagePath = null;
+            if (!mainImage.isEmpty()) {
+                mainImagePath = this.characterService.saveFile(mainImage);
+            }
+            Character character = this.characterService.updateCharacter(characterId, dto, thumbnailPath,
+                    mainImagePath);
             return "redirect:/characters/" + character.getId();
         } catch (Exception e) {
             return "redirect:/characters/new/?error=true";
