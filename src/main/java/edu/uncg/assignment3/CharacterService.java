@@ -16,7 +16,7 @@ public class CharacterService {
     }
 
     public List<Character> getAllCharacters() {
-        return this.characterRepository.findAll();
+        return this.characterRepository.findAllByOrderByIdAsc();
     }
 
     public Character getCharacterById(long characterId) {

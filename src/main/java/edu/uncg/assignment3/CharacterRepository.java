@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Long> {
     List<Character> findByNameContainingIgnoreCase(String nameKeyword);
-
     List<Character> findByOriginContainingIgnoreCase(String originKeyword);
+    List<Character> findAllByOrderByIdAsc();
 }
